@@ -13,31 +13,26 @@ using System.Threading.Tasks;
 using TTDConditionalTweaks.Managers;
 using TTDConditionalTweaks.Managers.RuleUpdaters;
 
-namespace TTDConditionalTweaks
-{
-    internal class KeyManager
-    {
+namespace TTDConditionalTweaks {
+    internal class KeyManager {
         private ConditionManager conditionManager;
 
         public KeyManager(ConditionManager conditionManager) {
             this.conditionManager = conditionManager;
         }
 
-        public void update(IFramework framework)
-        {
+        public void update(IFramework framework) {
             updateKeyPresses();
         }
         private DateTime controllerProcessDelay = DateTime.Now;
-        private void updateKeyPresses()
-        {
+        private void updateKeyPresses() {
             // Run every 250ms
             if (DateTime.Now < controllerProcessDelay) return;
             conditionManager.CheckAutorunChange(InputManager.IsAutoRunning());
             controllerProcessDelay = DateTime.Now.AddMilliseconds(250);
         }
 
-        public void configEvent(object? sender, Dalamud.Game.Config.ConfigChangeEvent e)
-        {
+        public void configEvent(object? sender, Dalamud.Game.Config.ConfigChangeEvent e) {
             Plugin.Log.Debug("Setting Changed: " + e.Option.ToString());
             RuleUpdater temp = RuleUpdater.GetRuleUpdater(e.Option.ToString());
             Plugin.Data.lastSetting = e.Option.ToString();

@@ -17,8 +17,7 @@ using static FFXIVClientStructs.FFXIV.Client.UI.AddonJobHudRDM0.BalanceGauge;
 
 namespace TTDConditionalTweaks.Windows;
 
-public class MainWindow : Window, IDisposable
-{
+public class MainWindow : Window, IDisposable {
     private ConditionManager conditionManager;
     private string goatImagePath;
     private Plugin plugin;
@@ -27,12 +26,10 @@ public class MainWindow : Window, IDisposable
     // So that the user will see "My Amazing Window" as window title,
     // but for ImGui the ID is "My Amazing Window##With a hidden ID"
     public MainWindow(Plugin plugin, string goatImagePath)
-        : base("Conditional Tweaks##TTDConditionalTweaks-main")
-    {
+        : base("Conditional Tweaks##TTDConditionalTweaks-main") {
 
         Flags = ImGuiWindowFlags.None;
-        SizeConstraints = new WindowSizeConstraints
-        {
+        SizeConstraints = new WindowSizeConstraints {
             MinimumSize = new Vector2(375, 250),
             MaximumSize = new Vector2(375, float.MaxValue)
         };
@@ -44,47 +41,39 @@ public class MainWindow : Window, IDisposable
 
     public void Dispose() { }
 
-    public override void Draw()
-    {
-        if (ImGui.BeginTabBar("Config Tabs"))
-        {
-            if (ImGui.BeginTabItem("Rules"))
-            {
-                if(ImGui.BeginChild("RulesChild", new Vector2(375, ImGui.GetContentRegionAvail().Y)))
-                {
+    public override void Draw() {
+        if (ImGui.BeginTabBar("Config Tabs")) {
+            if (ImGui.BeginTabItem("Rules")) {
+                if (ImGui.BeginChild("RulesChild", new Vector2(375, ImGui.GetContentRegionAvail().Y))) {
                     DrawRules();
                     ImGui.EndChild();
                 }
                 ImGui.EndTabItem();
             }
 
-            if (ImGui.BeginTabItem("Current Conditions"))
-            {
+            if (ImGui.BeginTabItem("Current Conditions")) {
                 DrawCurrentConditions();
                 ImGui.EndTabItem();
             }
 
-            if (ImGui.BeginTabItem("Other data"))
-            {
-                if (ImGui.BeginChild("RulesChild", new Vector2(375, ImGui.GetContentRegionAvail().Y)))
-                {
+            if (ImGui.BeginTabItem("Other data")) {
+                if (ImGui.BeginChild("RulesChild", new Vector2(375, ImGui.GetContentRegionAvail().Y))) {
                     DrawOtherData();
                     ImGui.EndChild();
                 }
                 ImGui.EndTabItem();
             }
 
-            if (ImGui.BeginTabItem("Goat"))
-            {
+            if (ImGui.BeginTabItem("Goat")) {
                 DrawGoat();
                 ImGui.EndTabItem();
             }
 
             ImGui.EndTabBar();
         }
-   }
+    }
 
-    private void HeadingButton(string text, Vector2 size){
+    private void HeadingButton(string text, Vector2 size) {
         ImGui.PushStyleColor(ImGuiCol.ButtonActive, Dalamud.Interface.Colors.ImGuiColors.ParsedGrey);
         ImGui.PushStyleColor(ImGuiCol.ButtonHovered, Dalamud.Interface.Colors.ImGuiColors.ParsedGrey);
         ImGui.PushStyleColor(ImGuiCol.Button, Dalamud.Interface.Colors.ImGuiColors.ParsedGrey);
@@ -92,19 +81,16 @@ public class MainWindow : Window, IDisposable
         ImGui.PopStyleColor(3);
     }
 
-    private void DrawRules()
-    {
+    private void DrawRules() {
         int num = 0;
         int width = ImGui.GetScrollMaxY() > 0.0f ? 355 : 360;
         Vector2 headingSize = new Vector2(width - 15, 20);
-        foreach (var rule in Plugin.Configuration.Rules)
-        {
+        foreach (var rule in Plugin.Configuration.Rules) {
 
             ImGui.BeginChild("Rule" + rule.setting + num++, new Vector2(width, 150 + rule.conditions.Count * 20), true);
             Plugin.Log.Info("Rule" + rule.setting + num);
             HeadingButton(rule.description, headingSize);
-            if(ImGui.BeginTable("RuleTable" + num, 2))
-            {
+            if (ImGui.BeginTable("RuleTable" + num, 2)) {
                 ImGui.TableSetupColumn("Attribute", ImGuiTableColumnFlags.WidthFixed, 80f);
                 ImGui.TableSetupColumn("Value");
                 ImGui.TableNextColumn();
@@ -122,15 +108,13 @@ public class MainWindow : Window, IDisposable
                 ImGui.TableNextColumn();
                 ImGui.Text("" + rule.valueOff);
                 ImGui.EndTable();
-            } 
+            }
 
-            if (ImGui.BeginTable("ConditionTable" + num, 2))
-            {
-                ImGui.TableSetupColumn("Condition",ImGuiTableColumnFlags.WidthStretch);
+            if (ImGui.BeginTable("ConditionTable" + num, 2)) {
+                ImGui.TableSetupColumn("Condition", ImGuiTableColumnFlags.WidthStretch);
                 ImGui.TableSetupColumn("Value", ImGuiTableColumnFlags.WidthFixed, 80f);
                 ImGui.TableHeadersRow();
-                foreach (var condition in rule.conditions)
-                {
+                foreach (var condition in rule.conditions) {
                     ImGui.TableNextRow();
                     ImGui.TableNextColumn();
                     ImGui.Text(condition.Key);
@@ -139,46 +123,38 @@ public class MainWindow : Window, IDisposable
                 }
                 ImGui.EndTable();
             }
-            using (ImRaii.PushFont(UiBuilder.IconFont))
-            {
-                if (ImGuiComponents.IconButton(FontAwesomeIcon.Copy.ToIconString())) 
+            using (ImRaii.PushFont(UiBuilder.IconFont)) {
+                if (ImGuiComponents.IconButton(FontAwesomeIcon.Copy.ToIconString()))
                     ImGui.SetClipboardText(rule.ToString());
             }
-            if (ImGui.IsItemHovered())
-            {
+            if (ImGui.IsItemHovered()) {
                 ImGui.SetTooltip("Copy");
             }
             ImGui.SameLine();
             ImGui.SetCursorPosX(width - 88);
-            if (ImGui.Button("Edit", Plugin.Data.saveSize))
-            {
+            if (ImGui.Button("Edit", Plugin.Data.saveSize)) {
                 Plugin.ConfigWindow.setRuleAndShow(rule);
             }
             ImGui.EndChild();
         }
         ImGui.SetCursorPosX(width - 88);
-        if (ImGui.Button("New", Plugin.Data.saveSize))
-        {
+        if (ImGui.Button("New", Plugin.Data.saveSize)) {
             Plugin.ConfigWindow.setRuleAndShow(rule: null);
         }
     }
 
-    private void DrawCurrentConditions()
-    {
+    private void DrawCurrentConditions() {
         ImGui.TextUnformatted(conditionManager.getConditionList());
     }
 
-    private void DrawOtherData()
-    {
+    private void DrawOtherData() {
         var localPlayer = Plugin.ClientState.LocalPlayer;
-        if (localPlayer == null)
-        {
+        if (localPlayer == null) {
             ImGui.TextUnformatted("Our local player is currently not loaded.");
             return;
         }
 
-        if (!localPlayer.ClassJob.IsValid)
-        {
+        if (!localPlayer.ClassJob.IsValid) {
             ImGui.TextUnformatted("Our current job is currently not valid.");
             return;
         }
@@ -189,30 +165,22 @@ public class MainWindow : Window, IDisposable
 
         // Example for quarrying Lumina directly, getting the name of our current area.
         var territoryId = Plugin.ClientState.TerritoryType;
-        if (Plugin.DataManager.GetExcelSheet<TerritoryType>().TryGetRow(territoryId, out var territoryRow))
-        {
+        if (Plugin.DataManager.GetExcelSheet<TerritoryType>().TryGetRow(territoryId, out var territoryRow)) {
             ImGui.TextUnformatted($"We are currently in ({territoryId}) \"{territoryRow.PlaceName.Value.Name.ExtractText()}\"");
-        }
-        else
-        {
+        } else {
             ImGui.TextUnformatted("Invalid territory.");
         }
         ImGui.TextWrapped("Last changed setting was " + Plugin.Data.lastSetting + " and it was set to " + Plugin.Data.lastSettingVal);
     }
 
-    private void DrawGoat()
-    {
+    private void DrawGoat() {
         ImGui.TextUnformatted("Have a goat:");
         var goatImage = Plugin.TextureProvider.GetFromFile(goatImagePath).GetWrapOrDefault();
-        if (goatImage != null)
-        {
-            using (ImRaii.PushIndent(55f))
-            {
+        if (goatImage != null) {
+            using (ImRaii.PushIndent(55f)) {
                 ImGui.Image(goatImage.ImGuiHandle, new Vector2(goatImage.Width, goatImage.Height));
             }
-        }
-        else
-        {
+        } else {
             ImGui.TextUnformatted("Image not found.");
         }
     }

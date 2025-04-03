@@ -13,59 +13,52 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TTDConditionalTweaks.Managers
-{
-    public class ConditionManager : IDisposable
-    {
+namespace TTDConditionalTweaks.Managers {
+    public class ConditionManager : IDisposable {
         private static ConditionManager? Instance;
         internal static Dictionary<string, bool> conditions = new Dictionary<string, bool>();
 
         private ConditionManager() { }
-        public static ConditionManager GetConditionManager()
-        {
+        public static ConditionManager GetConditionManager() {
             {
-                if (Instance == null)
-                {
+                if (Instance == null) {
                     Instance = new ConditionManager();
                 }
                 return Instance;
             }
         }
 
-        public void Dispose()
-        {
+        public void Dispose() {
         }
 
-        public string getConditionList()
-        {
+        public string getConditionList() {
             var retVal = "";
-            foreach (var condition in conditions)
-            {
+            foreach (var condition in conditions) {
                 retVal += condition.Key + ": " + condition.Value + "\n";
             }
             return retVal;
         }
 
-        public void OnConditionChange(ConditionFlag flag, bool value)
-        {
+        public void OnConditionChange(ConditionFlag flag, bool value) {
             var flagName = "" + Enum.GetName(flag);
             conditions[flagName] = value;
-            doRuleUpdate(flagName);
-        }
-
-        public void CheckAutorunChange(bool value)
-        {
-            var curVal = false;
-            conditions.TryGetValue("ActualAutorun", out curVal);
-            if (value != curVal)
-            {
-                conditions["ActualAutorun"] = value;
-                doRuleUpdate("ActualAutorun");
+            if (!Plugin.ClientState.IsPvP) {
+                doRuleUpdate(flagName);
             }
         }
 
-        private void doRuleUpdate(string flagName)
-        {
+        public void CheckAutorunChange(bool value) {
+            var curVal = false;
+            conditions.TryGetValue("ActualAutorun", out curVal);
+            if (value != curVal) {
+                conditions["ActualAutorun"] = value;
+                if (!Plugin.ClientState.IsPvP) {
+                    doRuleUpdate("ActualAutorun");
+                }
+            }
+        }
+
+        private void doRuleUpdate(string flagName) {
             Plugin.RuleManager.checkRules(flagName);
         }
     }

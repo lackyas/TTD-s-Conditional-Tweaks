@@ -6,32 +6,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TTDConditionalTweaks.Managers
-{
-    internal class RuleManager
-    {
+namespace TTDConditionalTweaks.Managers {
+    internal class RuleManager {
         public RuleManager() { }
 
-        public void init()
-        {
-           if(Plugin.Configuration.Rules.Count == 0)
-            {
+        public void init() {
+            if (Plugin.Configuration.Rules.Count == 0) {
                 Plugin.Configuration.Rules.Add(new Rule("Disable Autosheathe in instances", "WeaponAutoPutAway", 0, 1, new Dictionary<string, bool> { { "BoundByDuty", true }, { "InDeepDungeon", true } }));
                 Plugin.Configuration.Rules.Add(new Rule("Enable BGM in instances and cutscenes", "IsSndBgm", 0, 1, new Dictionary<string, bool> { { "BoundByDuty", true }, { "InDeepDungeon", true }, { "OccupiedInCutSceneEvent", true } }));
-                Plugin.Configuration.Rules.Add(new Rule("Legacy movement with standard autorun", "MoveMode", 0, 1, new Dictionary<string, bool> { { "ActualAutorun", true }}));
+                Plugin.Configuration.Rules.Add(new Rule("Legacy movement with standard autorun", "MoveMode", 0, 1, new Dictionary<string, bool> { { "ActualAutorun", true } }));
                 Plugin.Configuration.Save();
             }
-            foreach (var rule in Plugin.Configuration.Rules)
-            {
+            foreach (var rule in Plugin.Configuration.Rules) {
                 Plugin.Log.Debug("Loaded rule: " + rule.ToString());
             }
             Plugin.Log.Debug("There are " + Plugin.Configuration.Rules.Count + " rules.");
         }
 
-        public void checkRules(string condition)
-        {
-            foreach (Rule rule in Plugin.Configuration.Rules)
-            {
+        public void checkRules(string condition) {
+            foreach (Rule rule in Plugin.Configuration.Rules) {
                 rule.checkRule(condition);
             }
         }
@@ -45,8 +38,7 @@ namespace TTDConditionalTweaks.Managers
                                             "shoddy", "inferior", "cheap", "abysmal", "defective", "unsatisfactory"];
         private readonly string[] noun = ["rule", "law", "statute", "regulation", "decree", "principle", "edict", "mandate", "code", "dictate",
                                           "injunction", "commandmemnt", "maxim", "axiom", "bylaw", "golden rule", "directive", "prescript", "tenet", "order"];
-        internal Rule getGenericRule()
-        {
+        internal Rule getGenericRule() {
             Random rnd = new Random();
             return new Rule(npcName[rnd.Next(npcName.Length)] + "'s " + quality[rnd.Next(quality.Length)] + " " + noun[rnd.Next(noun.Length)], "None set", 0, 1, new Dictionary<string, bool> { });
         }
@@ -54,7 +46,7 @@ namespace TTDConditionalTweaks.Managers
         internal static Rule? getRuleFromString(string ruleString) {
             //Rule(Enable BGM in instances and cutscenes | IsSndBgm 0/1 conditions({BoundByDuty, True} {InDeepDungeon, True} {OccupiedInCutSceneEvent, True} {ActualAutorun, False} ))
             Plugin.Log.Debug("Recieved clipboard text: " + ruleString);
-            if(!(ruleString.StartsWith("Rule(")) && ruleString.EndsWith("} ))")) return null;
+            if (!(ruleString.StartsWith("Rule(")) && ruleString.EndsWith("} ))")) return null;
 
             ruleString = ruleString.Remove(ruleString.Length - 4, 4).Remove(0, 5);
 
@@ -74,18 +66,14 @@ namespace TTDConditionalTweaks.Managers
             parts = parts[2].Split("} {");
 
             Dictionary<string, bool> conditions = new Dictionary<string, bool>();
-            
-            foreach(string part in parts)
-            {
+
+            foreach (string part in parts) {
                 string[] subparts = part.Split(", ");
-                if (subparts[1] == "True")
-                {
+                if (subparts[1] == "True") {
                     conditions[subparts[0]] = true;
-                } else if (subparts[1] == "False")
-                {
+                } else if (subparts[1] == "False") {
                     conditions[subparts[0]] = false;
-                } else
-                {
+                } else {
                     return null;
                 }
             }

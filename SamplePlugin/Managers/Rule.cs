@@ -25,18 +25,15 @@ namespace TTDConditionalTweaks.Managers {
 
             updater = RuleUpdater.GetRuleUpdater(setting);
 
-            foreach (var condition in conditions)
-            {
-                if (!ConditionManager.conditions.ContainsKey(condition.Key))
-                {
+            foreach (var condition in conditions) {
+                if (!ConditionManager.conditions.ContainsKey(condition.Key)) {
                     ConditionManager.conditions[condition.Key] = false;
                 }
             }
 
         }
 
-        public void setRule(string setting)
-        {
+        public void setRule(string setting) {
             this.setting = setting;
             updater = RuleUpdater.GetRuleUpdater(setting);
         }
@@ -45,12 +42,9 @@ namespace TTDConditionalTweaks.Managers {
             //return if update is irrelivant
             if (!conditions.ContainsKey(updatedCondition)) return;
             //if enabled check if it's time to disable
-            if(updater.getValue() == value)
-            {
-                foreach (var condition in conditions)
-                {
-                    if (ConditionManager.conditions[condition.Key] == condition.Value)
-                    {
+            if (updater.getValue() == value) {
+                foreach (var condition in conditions) {
+                    if (ConditionManager.conditions[condition.Key] == condition.Value) {
                         return;
                     }
                 }
@@ -59,10 +53,8 @@ namespace TTDConditionalTweaks.Managers {
 
             //otherwise check if time to enable
             else {
-                foreach (var condition in conditions)
-                {
-                    if (ConditionManager.conditions[condition.Key] == condition.Value)
-                    {
+                foreach (var condition in conditions) {
+                    if (ConditionManager.conditions[condition.Key] == condition.Value) {
                         updater.setValue(value);
                         return;
                     }
@@ -70,11 +62,9 @@ namespace TTDConditionalTweaks.Managers {
             }
         }
 
-        public override string ToString()
-        {
-            string retVal = "Rule(" + description + " | "+ setting + " " + value + "/" + valueOff + " conditions(";
-            foreach (var condition in conditions)
-            {
+        public override string ToString() {
+            string retVal = "Rule(" + description + " | " + setting + " " + value + "/" + valueOff + " conditions(";
+            foreach (var condition in conditions) {
                 retVal += "{" + condition.Key + ", " + condition.Value + "} ";
             }
             retVal += "))";

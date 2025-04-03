@@ -12,8 +12,7 @@ using FFXIVClientStructs.FFXIV.Common.Configuration;
 
 namespace TTDConditionalTweaks;
 
-public sealed class Plugin : IDalamudPlugin
-{
+public sealed class Plugin : IDalamudPlugin {
     [PluginService] internal static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
     [PluginService] internal static ITextureProvider TextureProvider { get; private set; } = null!;
     [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
@@ -38,8 +37,7 @@ public sealed class Plugin : IDalamudPlugin
     private KeyManager keyManager { get; init; }
     private EventHandler<Dalamud.Game.Config.ConfigChangeEvent> configEvent { get; init; }
 
-    public Plugin()
-    {
+    public Plugin() {
         Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
 
         // you might normally want to embed resources and load them from the manifest stream
@@ -51,7 +49,7 @@ public sealed class Plugin : IDalamudPlugin
         conditionManger = ConditionManager.GetConditionManager();
         keyManager = new KeyManager(conditionManger);
         configEvent = new EventHandler<Dalamud.Game.Config.ConfigChangeEvent>(keyManager.configEvent);
-        
+
         Data = new Data();
 
         RuleManager.init();
@@ -59,8 +57,7 @@ public sealed class Plugin : IDalamudPlugin
         WindowSystem.AddWindow(ConfigWindow);
         WindowSystem.AddWindow(MainWindow);
 
-        CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
-        {
+        CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand) {
             HelpMessage = "Opens the settings menu."
         });
 
@@ -82,8 +79,7 @@ public sealed class Plugin : IDalamudPlugin
 
     }
 
-    public void Dispose()
-    {
+    public void Dispose() {
         WindowSystem.RemoveAllWindows();
 
         ConfigWindow.Dispose();
@@ -100,8 +96,7 @@ public sealed class Plugin : IDalamudPlugin
         conditionManger.Dispose();
     }
 
-    private void OnCommand(string command, string args)
-    {
+    private void OnCommand(string command, string args) {
         // in response to the slash command, just toggle the display status of our main ui
         ToggleMainUI();
     }

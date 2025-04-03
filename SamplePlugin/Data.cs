@@ -8,10 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TTDConditionalTweaks.Managers.RuleUpdaters;
 
-namespace TTDConditionalTweaks
-{
-    internal class Data
-    {
+namespace TTDConditionalTweaks {
+    internal class Data {
         internal string lastSetting = "None";
         internal string lastSettingVal = "Nothing";
         internal string[] settings;
@@ -22,8 +20,7 @@ namespace TTDConditionalTweaks
         internal Vector2 saveSize = new Vector2(80, 20);
         internal Vector2 smallButton = new Vector2(20, 20);
 
-        internal Data()
-        {
+        internal Data() {
             List<string> temp = new List<string>();
             temp.Add(noSettingSet);
             temp.AddRange(Enum.GetNames<SystemConfigOption>());

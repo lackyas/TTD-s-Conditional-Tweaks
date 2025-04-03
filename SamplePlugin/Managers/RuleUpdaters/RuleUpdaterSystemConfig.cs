@@ -5,10 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TTDConditionalTweaks.Managers.RuleUpdaters
-{
-    internal class RuleUpdaterSystemConfig : RuleUpdater
-    {
+namespace TTDConditionalTweaks.Managers.RuleUpdaters {
+    internal class RuleUpdaterSystemConfig : RuleUpdater {
         SystemConfigOption setting;
 
         public RuleUpdaterSystemConfig(string setting) {
