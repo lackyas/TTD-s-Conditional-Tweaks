@@ -2,7 +2,7 @@
     "Author": "TheThirdDoor",
     "Name": "Conditional Tweaks",
     "Punchline": "Tweaks and options based on the charactor's state.",
-    "Description": "Lets the user change game settings based on the character's state.\nDo you want to keep you weapon out in dungeons?\nDo you want BGM to always be on for cutscenes?\nDo you want the world to turn purple when you jump?\nThen this is the plugin for you!\n\n In fact here are the rules you'll need for that last thing (copy and import them one at a time).\nRule(Miounne's standard directive | AccessibilityColorBlindFilterEnable 1/0 conditions({Jumping, True} ))\nRule(Kan-E-Senna's shoddy golden rule | AccessibilityColorBlindFilterType 3/0 conditions({Jumping, True} ))",
+    "Description": "Lets the user change game settings based on the character's state.\nDo you want to keep you weapon out in dungeons?\nDo you want BGM to always be on for cutscenes?\nDo you want the world to turn purple when you jump?\nThen this is the plugin for you!\n\n In fact here are the rules you'll need for that last thing (copy and import them one at a time).\nRule(Miounne's standard directive | AccessibilityColorBlindFilterEnable 1/0 conditions({Jumping, True} ))\nRule(Kan-E-Senna's shoddy golden rule | AccessibilityColorBlindFilterType 3/0 conditions({Jumping, True} ))\n\nNot available in pvp.",
     "ApplicableVersion": "any",
     "Tags": [
         "utility",
