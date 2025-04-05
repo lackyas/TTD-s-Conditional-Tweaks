@@ -13,6 +13,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>false</Visible>
     </Content>
-    <Content Include="TTDConditionalTweaks.json" />
+    <Content Include="ConditionalTweaks.json" />
   </ItemGroup>
 </Project>

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TTDConditionalTweaks.Managers.RuleUpdaters;
+using ConditionalTweaks.Managers.RuleUpdaters;
 
-namespace TTDConditionalTweaks {
+namespace ConditionalTweaks {
     internal class Data {
         internal string lastSetting = "None";
         internal string lastSettingVal = "Nothing";

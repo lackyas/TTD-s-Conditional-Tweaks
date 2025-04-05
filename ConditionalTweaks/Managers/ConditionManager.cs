@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TTDConditionalTweaks.Managers {
+namespace ConditionalTweaks.Managers {
     public class ConditionManager : IDisposable {
         private static ConditionManager? Instance;
         internal static Dictionary<string, bool> conditions = new Dictionary<string, bool>();

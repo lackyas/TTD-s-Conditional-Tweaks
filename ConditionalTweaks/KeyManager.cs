@@ -10,10 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TTDConditionalTweaks.Managers;
-using TTDConditionalTweaks.Managers.RuleUpdaters;
+using ConditionalTweaks.Managers;
+using ConditionalTweaks.Managers.RuleUpdaters;
 
-namespace TTDConditionalTweaks {
+namespace ConditionalTweaks {
     internal class KeyManager {
         private ConditionManager conditionManager;
 

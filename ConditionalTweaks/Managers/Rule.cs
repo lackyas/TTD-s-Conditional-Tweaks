@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TTDConditionalTweaks.Managers.RuleUpdaters;
+using ConditionalTweaks.Managers.RuleUpdaters;
 
-namespace TTDConditionalTweaks.Managers {
+namespace ConditionalTweaks.Managers {
     public class Rule {
         public string setting { get; private set; }
         public string description;

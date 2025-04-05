@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TTDConditionalTweaks.Managers.RuleUpdaters {
+namespace ConditionalTweaks.Managers.RuleUpdaters {
     internal class RuleUpdater {
         internal RuleUpdater() { }
 

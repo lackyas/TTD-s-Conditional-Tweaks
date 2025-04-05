@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TTDConditionalTweaks.Managers.RuleUpdaters {
-    internal class RuleUpdaterSystemConfig : RuleUpdater {
-        SystemConfigOption setting;
-
-        public RuleUpdaterSystemConfig(string setting) {
-            this.setting = (SystemConfigOption)Enum.Parse(typeof(SystemConfigOption), setting);
+namespace ConditionalTweaks.Managers.RuleUpdaters {
+    internal class RuleUpdaterUIConfig : RuleUpdater {
+        UiConfigOption setting;
+        public RuleUpdaterUIConfig(string setting) {
+            this.setting = (UiConfigOption)Enum.Parse(typeof(UiConfigOption), setting);
         }
         public override uint getValue() {
             uint retVal;

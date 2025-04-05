@@ -12,10 +12,10 @@ using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.System.Input;
 using ImGuiNET;
 using Lumina.Excel.Sheets;
-using TTDConditionalTweaks.Managers;
+using ConditionalTweaks.Managers;
 using static FFXIVClientStructs.FFXIV.Client.UI.AddonJobHudRDM0.BalanceGauge;
 
-namespace TTDConditionalTweaks.Windows;
+namespace ConditionalTweaks.Windows;
 
 public class MainWindow : Window, IDisposable {
     private ConditionManager conditionManager;
@@ -26,7 +26,7 @@ public class MainWindow : Window, IDisposable {
     // So that the user will see "My Amazing Window" as window title,
     // but for ImGui the ID is "My Amazing Window##With a hidden ID"
     public MainWindow(Plugin plugin, string goatImagePath)
-        : base("Conditional Tweaks##TTDConditionalTweaks-main") {
+        : base("Conditional Tweaks##ConditionalTweaks-main") {
 
         Flags = ImGuiWindowFlags.None;
         SizeConstraints = new WindowSizeConstraints {

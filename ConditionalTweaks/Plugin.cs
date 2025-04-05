@@ -4,13 +4,13 @@ using Dalamud.Plugin;
 using System.IO;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
-using TTDConditionalTweaks.Windows;
+using ConditionalTweaks.Windows;
 using FFXIVClientStructs.FFXIV.Client.Game.Control;
 using System;
-using TTDConditionalTweaks.Managers;
+using ConditionalTweaks.Managers;
 using FFXIVClientStructs.FFXIV.Common.Configuration;
 
-namespace TTDConditionalTweaks;
+namespace ConditionalTweaks;
 
 public sealed class Plugin : IDalamudPlugin {
     [PluginService] internal static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
@@ -69,7 +69,7 @@ public sealed class Plugin : IDalamudPlugin {
         // Add a simple message to the log with level set to information
         // Use /xllog to open the log window in-game
         // Example Output: 00:57:54.959 | INF | [SamplePlugin] ===A cool log message from Sample Plugin===
-        Log.Information($"===A cool log message from {PluginInterface.Manifest.Name}===");
+        // Log.Information($"===A cool log message from {PluginInterface.Manifest.Name}===");
 
         Condition.ConditionChange += conditionManger.OnConditionChange;
         Framework.Update += keyManager.update;

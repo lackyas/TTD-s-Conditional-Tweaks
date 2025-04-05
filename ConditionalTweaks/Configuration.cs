@@ -2,9 +2,9 @@ using Dalamud.Configuration;
 using Dalamud.Plugin;
 using System;
 using System.Collections.Generic;
-using TTDConditionalTweaks.Managers;
+using ConditionalTweaks.Managers;
 
-namespace TTDConditionalTweaks;
+namespace ConditionalTweaks;
 
 [Serializable]
 public class Configuration : IPluginConfiguration {

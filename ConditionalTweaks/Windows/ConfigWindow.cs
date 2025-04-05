@@ -6,9 +6,9 @@ using Dalamud.Interface.Components;
 using Dalamud.Interface.Utility.Raii;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
-using TTDConditionalTweaks.Managers;
-using TTDConditionalTweaks.Managers.RuleUpdaters;
-namespace TTDConditionalTweaks.Windows;
+using ConditionalTweaks.Managers;
+using ConditionalTweaks.Managers.RuleUpdaters;
+namespace ConditionalTweaks.Windows;
 
 public class ConfigWindow : Window, IDisposable {
     private Rule? rule = null;
@@ -30,7 +30,7 @@ public class ConfigWindow : Window, IDisposable {
     // We give this window a constant ID using ###
     // This allows for labels being dynamic, like "{FPS Counter}fps###XYZ counter window",
     // and the window ID will always be "###XYZ counter window" for ImGui
-    public ConfigWindow() : base("Conditional Tweaks Editor###TTDConditionalTweaks-settings") {
+    public ConfigWindow() : base("Conditional Tweaks Editor###ConditionalTweaks-settings") {
         Flags = ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
                 ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.AlwaysAutoResize;
 
@@ -50,7 +50,7 @@ public class ConfigWindow : Window, IDisposable {
             newRule = false;
         }
 
-        this.WindowName = "Conditional Tweaks Editor - " + (newRule ? "New Rule" : "Editing rule") + "###TTDConditionalTweaks-settings";
+        this.WindowName = "Conditional Tweaks Editor - " + (newRule ? "New Rule" : "Editing rule") + "###ConditionalTweaks-settings";
 
         if (rule != this.rule) {
             this.rule = rule;

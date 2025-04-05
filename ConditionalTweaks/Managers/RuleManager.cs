@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TTDConditionalTweaks.Managers {
+namespace ConditionalTweaks.Managers {
     internal class RuleManager {
         public RuleManager() { }
 
