@@ -1,9 +1,5 @@
 using Dalamud.Game.Config;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConditionalTweaks.Managers.RuleUpdaters {
     internal class RuleUpdaterSystemConfig : RuleUpdater {
@@ -11,6 +7,7 @@ namespace ConditionalTweaks.Managers.RuleUpdaters {
 
         public RuleUpdaterSystemConfig(string setting) {
             this.setting = (SystemConfigOption)Enum.Parse(typeof(SystemConfigOption), setting);
+            this.type = SettingTypes.SYSTEMCONFIG;
         }
         public override uint getValue() {
             uint retVal;

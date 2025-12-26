@@ -1,19 +1,12 @@
 using System;
-using System.Data;
 using System.Numerics;
-using Dalamud.Game.Config;
 using Dalamud.Interface;
 using Dalamud.Interface.Components;
-using Dalamud.Interface.ManagedFontAtlas;
-using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using Dalamud.Interface.Windowing;
-using Dalamud.Plugin.Services;
-using FFXIVClientStructs.FFXIV.Client.System.Input;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using Lumina.Excel.Sheets;
 using ConditionalTweaks.Managers;
-using static FFXIVClientStructs.FFXIV.Client.UI.AddonJobHudRDM0.BalanceGauge;
 
 namespace ConditionalTweaks.Windows;
 
@@ -88,7 +81,6 @@ public class MainWindow : Window, IDisposable {
         foreach (var rule in Plugin.Configuration.Rules) {
 
             ImGui.BeginChild("Rule" + rule.setting + num++, new Vector2(width, 150 + rule.conditions.Count * 20), true);
-            Plugin.Log.Info("Rule" + rule.setting + num);
             HeadingButton(rule.description, headingSize);
             if (ImGui.BeginTable("RuleTable" + num, 2)) {
                 ImGui.TableSetupColumn("Attribute", ImGuiTableColumnFlags.WidthFixed, 80f);
@@ -178,7 +170,7 @@ public class MainWindow : Window, IDisposable {
         var goatImage = Plugin.TextureProvider.GetFromFile(goatImagePath).GetWrapOrDefault();
         if (goatImage != null) {
             using (ImRaii.PushIndent(55f)) {
-                ImGui.Image(goatImage.ImGuiHandle, new Vector2(goatImage.Width, goatImage.Height));
+                ImGui.Image(goatImage.Handle, new Vector2(goatImage.Width, goatImage.Height));
             }
         } else {
             ImGui.TextUnformatted("Image not found.");

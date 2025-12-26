@@ -5,10 +5,8 @@ using System.IO;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
 using ConditionalTweaks.Windows;
-using FFXIVClientStructs.FFXIV.Client.Game.Control;
 using System;
 using ConditionalTweaks.Managers;
-using FFXIVClientStructs.FFXIV.Common.Configuration;
 
 namespace ConditionalTweaks;
 
@@ -22,6 +20,9 @@ public sealed class Plugin : IDalamudPlugin {
     [PluginService] internal static ICondition Condition { get; private set; } = null!;
     [PluginService] internal static IFramework Framework { get; private set; } = null!;
     [PluginService] internal static IGameConfig GameConfig { get; private set; } = null!;
+    [PluginService] internal static IKeyState keyState { get; private set; } = null!;
+    [PluginService] internal static IGamepadState gamepadState { get; private set; } = null!;
+    [PluginService] internal static ISigScanner SigScanner { get; private set; } = null!;
 
 
     private const string CommandName = "/CondiTweaks";

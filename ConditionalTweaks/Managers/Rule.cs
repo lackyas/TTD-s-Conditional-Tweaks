@@ -1,10 +1,4 @@
-using Dalamud.Game.Config;
-using FFXIVClientStructs.FFXIV.Client.UI.Misc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ConditionalTweaks.Managers.RuleUpdaters;
 
 namespace ConditionalTweaks.Managers {
@@ -37,28 +31,45 @@ namespace ConditionalTweaks.Managers {
             this.setting = setting;
             updater = RuleUpdater.GetRuleUpdater(setting);
         }
+        
+        private bool checkDisable()
+        {
+            foreach (var condition in conditions)
+            {
+                if (ConditionManager.conditions[condition.Key] == condition.Value)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private bool checkEnable()
+        {
+            foreach (var condition in conditions)
+            {
+                if (ConditionManager.conditions[condition.Key] == condition.Value)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
         public void checkRule(string updatedCondition) {
             //return if update is irrelivant
             if (!conditions.ContainsKey(updatedCondition)) return;
+            if (updater.type == RuleUpdater.SettingTypes.DUMMY) return;
+
             //if enabled check if it's time to disable
-            if (updater.getValue() == value) {
-                foreach (var condition in conditions) {
-                    if (ConditionManager.conditions[condition.Key] == condition.Value) {
-                        return;
-                    }
-                }
-                updater.setValue(valueOff);
+            if (updater.type == RuleUpdater.SettingTypes.COMMAND || updater.getValue() == value) {
+                if(checkDisable()) updater.setValue(valueOff);
             }
 
             //otherwise check if time to enable
-            else {
-                foreach (var condition in conditions) {
-                    if (ConditionManager.conditions[condition.Key] == condition.Value) {
-                        updater.setValue(value);
-                        return;
-                    }
-                }
+            if (updater.type == RuleUpdater.SettingTypes.COMMAND || updater.getValue() != value) {
+                if(checkEnable()) updater.setValue(value);
             }
         }
 

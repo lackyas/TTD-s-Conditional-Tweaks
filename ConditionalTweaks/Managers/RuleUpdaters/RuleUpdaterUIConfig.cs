@@ -1,15 +1,12 @@
 using Dalamud.Game.Config;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConditionalTweaks.Managers.RuleUpdaters {
     internal class RuleUpdaterUIConfig : RuleUpdater {
         UiConfigOption setting;
         public RuleUpdaterUIConfig(string setting) {
             this.setting = (UiConfigOption)Enum.Parse(typeof(UiConfigOption), setting);
+            this.type = SettingTypes.UICONFIG;
         }
         public override uint getValue() {
             uint retVal;

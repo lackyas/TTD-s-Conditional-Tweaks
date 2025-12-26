@@ -5,7 +5,7 @@ using Dalamud.Interface;
 using Dalamud.Interface.Components;
 using Dalamud.Interface.Utility.Raii;
 using Dalamud.Interface.Windowing;
-using ImGuiNET;
+using Dalamud.Bindings.ImGui;
 using ConditionalTweaks.Managers;
 using ConditionalTweaks.Managers.RuleUpdaters;
 namespace ConditionalTweaks.Windows;

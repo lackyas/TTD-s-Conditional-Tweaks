@@ -1,12 +1,10 @@
+using ConditionalTweaks.Managers.RuleUpdaters;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Config;
 using FFXIVClientStructs.FFXIV.Common.Math;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConditionalTweaks.Managers.RuleUpdaters;
 
 namespace ConditionalTweaks {
     internal class Data {
@@ -26,11 +24,23 @@ namespace ConditionalTweaks {
             temp.AddRange(Enum.GetNames<SystemConfigOption>());
             temp.AddRange(Enum.GetNames<UiConfigOption>());
             temp.AddRange(Enum.GetNames<UiControlOption>());
+            temp.AddRange(RuleUpdaterCommand.validCommandRules.Keys);
             temp.Sort();
-            settings = temp.ToArray();
+            var duplicates = temp.GroupBy(x => x)
+                     .Where(g => g.Count() > 1)
+                     .Select(g => g.Key)
+                     .ToList();
+
+            if (duplicates.Count > 0)
+            {
+                Plugin.Log.Info($"Removing {duplicates.Count} duplicates from the available settings: {string.Join(", ", duplicates)}");
+            }
+
+            settings = temp.Distinct().ToArray();
             temp = new List<string>();
             temp.AddRange(Enum.GetNames<ConditionFlag>());
             temp.Add("ActualAutorun");
+            temp.Add("UsingController");
             temp.Sort();
             conditions = temp.ToArray();
         }
