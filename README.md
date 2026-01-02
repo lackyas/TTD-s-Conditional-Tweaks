@@ -53,3 +53,4 @@ You don't have to build every rule yourself.
 ## ❤️ Support
 If you found this tool useful, consider giving the repo a star!
 If you want to support my "Project a Week" challenge or buy me a coffee, you can do so here: [Become a Patron](https://www.patreon.com/cw/ccgreen)
+
