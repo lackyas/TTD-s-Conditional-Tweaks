@@ -28,7 +28,6 @@ namespace ConditionalTweaks {
             RuleUpdater temp = RuleUpdater.GetRuleUpdater(e.Option.ToString());
             Plugin.Data.lastSetting = e.Option.ToString();
             Plugin.Data.lastSettingVal = "" + (int)temp.getValue();
-            Plugin.Log.Info("Setting Changed: " + e.Option.ToString() + " - to: " + (int)temp.getValue());
         }
     }
 }

@@ -13,10 +13,6 @@
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		  <Visible>false</Visible>
 	  </Content>
-	  <Content Include=".\images\icon.png">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		  <Visible>false</Visible>
-	  </Content>
     <Content Include="ConditionalTweaks.json" />
   </ItemGroup>
 
