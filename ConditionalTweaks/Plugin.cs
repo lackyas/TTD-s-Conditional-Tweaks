@@ -1,12 +1,13 @@
+using ConditionalTweaks.Managers;
+using ConditionalTweaks.Windows;
 using Dalamud.Game.Command;
+using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
-using System.IO;
-using Dalamud.Interface.Windowing;
 using Dalamud.Plugin.Services;
-using ConditionalTweaks.Windows;
+using FFXIVClientStructs.FFXIV.Client.Game.Control;
 using System;
-using ConditionalTweaks.Managers;
+using System.IO;
 
 namespace ConditionalTweaks;
 
@@ -15,6 +16,7 @@ public sealed class Plugin : IDalamudPlugin {
     [PluginService] internal static ITextureProvider TextureProvider { get; private set; } = null!;
     [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
     [PluginService] internal static IClientState ClientState { get; private set; } = null!;
+    [PluginService] internal static IPlayerState PlayerState { get; private set;  } = null!;
     [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
     [PluginService] internal static IPluginLog Log { get; private set; } = null!;
     [PluginService] internal static ICondition Condition { get; private set; } = null!;
@@ -34,7 +36,7 @@ public sealed class Plugin : IDalamudPlugin {
     public readonly WindowSystem WindowSystem = new("Conditional Tweaks");
     internal static ConfigWindow ConfigWindow { get; set; }
     private MainWindow MainWindow { get; init; }
-    private ConditionManager conditionManger { get; init; }
+    internal static ConditionManager conditionManager { get; set; }
     private KeyManager keyManager { get; init; }
     private EventHandler<Dalamud.Game.Config.ConfigChangeEvent> configEvent { get; init; }
 
@@ -47,8 +49,8 @@ public sealed class Plugin : IDalamudPlugin {
         RuleManager = new RuleManager();
         ConfigWindow = new ConfigWindow();
         MainWindow = new MainWindow(this, goatImagePath);
-        conditionManger = ConditionManager.GetConditionManager();
-        keyManager = new KeyManager(conditionManger);
+        conditionManager = ConditionManager.GetConditionManager();
+        keyManager = new KeyManager();
         configEvent = new EventHandler<Dalamud.Game.Config.ConfigChangeEvent>(keyManager.configEvent);
 
         Data = new Data();
@@ -67,8 +69,8 @@ public sealed class Plugin : IDalamudPlugin {
         // Adds another button that is doing the same but for the main ui of the plugin
         PluginInterface.UiBuilder.OpenMainUi += ToggleMainUI;
 
-        Condition.ConditionChange += conditionManger.OnConditionChange;
-        Framework.Update += keyManager.update;
+        Condition.ConditionChange += conditionManager.OnConditionChange;
+        Framework.Update += OnFrameworkUpdate;
         GameConfig.UiControlChanged += configEvent;
         GameConfig.UiConfigChanged += configEvent;
         GameConfig.SystemChanged += configEvent;
@@ -83,18 +85,28 @@ public sealed class Plugin : IDalamudPlugin {
 
         CommandManager.RemoveHandler(CommandName);
 
-        Condition.ConditionChange -= conditionManger.OnConditionChange;
-        Framework.Update -= keyManager.update;
+        Condition.ConditionChange -= conditionManager.OnConditionChange;
+        Framework.Update -= OnFrameworkUpdate;
         GameConfig.UiControlChanged -= configEvent;
         GameConfig.UiConfigChanged -= configEvent;
         GameConfig.SystemChanged -= configEvent;
 
-        conditionManger.Dispose();
+        conditionManager.Dispose();
     }
 
     private void OnCommand(string command, string args) {
         // in response to the slash command, just toggle the display status of our main ui
         ToggleMainUI();
+    }
+
+    // Only update these 4 times a second
+    private DateTime frameworkUpdateDelay = DateTime.Now;
+    private void OnFrameworkUpdate(IFramework framework) {
+        if (DateTime.Now < frameworkUpdateDelay) return;
+        frameworkUpdateDelay = DateTime.Now.AddMilliseconds(250);
+        conditionManager.CheckAutorunChange(InputManager.IsAutoRunning());
+        conditionManager.CheckIfUsingController();
+        conditionManager.CheckRoleChange();
     }
 
     private void DrawUI() => WindowSystem.Draw();

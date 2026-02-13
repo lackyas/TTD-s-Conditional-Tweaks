@@ -140,7 +140,7 @@ public class MainWindow : Window, IDisposable {
     }
 
     private void DrawOtherData() {
-        var localPlayer = Plugin.ClientState.LocalPlayer;
+        var localPlayer = Plugin.PlayerState;
         if (localPlayer == null) {
             ImGui.TextUnformatted("Our local player is currently not loaded.");
             return;

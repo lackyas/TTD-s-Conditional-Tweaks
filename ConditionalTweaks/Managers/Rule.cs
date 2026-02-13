@@ -44,12 +44,9 @@ namespace ConditionalTweaks.Managers {
             return true;
         }
 
-        private bool checkEnable()
-        {
-            foreach (var condition in conditions)
-            {
-                if (ConditionManager.conditions[condition.Key] == condition.Value)
-                {
+        private bool checkEnable() {
+            foreach (var condition in conditions) {
+                if (ConditionManager.conditions[condition.Key] == condition.Value) {
                     return true;
                 }
             }
